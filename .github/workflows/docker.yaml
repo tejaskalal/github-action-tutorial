@@ -2,21 +2,21 @@ name: docker CI workflow/pipeline
 
 on:
   push:
-    branches: ["master"]
-
+    branches: [ "master" ]  
 
 jobs:
   build:
     runs-on: self-hosted
+
     steps:
-    - name: checkout code
-      uses: actions/checkout@v3
+      - name: Checkout code
+        uses: actions/checkout@v3
 
-    - name: loging to docker hub
-      run: echo "${{secrets.DOCKERHUB_TOKEN}}" | docker login -u "${{secrets.DOCKERHUB_USERNAME}}" --password-stdin
+      - name: Login to DockerHub
+        run: echo "${{ secrets.DOCKERHUB_TOKEN }}" | docker login -u "${{ secrets.DOCKERHUB_USERNAME }}" --password-stdin
 
-    - name: build docker image
-      run: docker build -t ${{secrets.DOCKERHUB_USERNAME}} my-node-app:latest .
+      - name: Build Docker image
+        run: docker build -t ${{ secrets.DOCKERHUB_USERNAME }}/my-node-app:latest .
 
-    - name: push docker image
-      run: docker push ${{secrets.DOCKERHUB_USERNAME}} my-node-app:latest
+      - name: Push Docker image
+        run: docker push ${{ secrets.DOCKERHUB_USERNAME }}/my-node-app:latest
