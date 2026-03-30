@@ -1,0 +1,31 @@
+name: node ci workflow
+on:
+  push:
+  pull_request:
+  
+jobs:
+  build:
+    runs-on: ubuntu-latest
+
+    steps:
+    - name: checkout code
+      uses: actions/checkout@v4
+
+    - name: check folder structure
+      run: 
+        pwd
+        ls -l
+        ls -l app
+
+    - name: setup node
+      uses: actions/setup-project@v4
+      with:
+        node-version: 18
+    
+    - name: install dependencies
+      run: npm install
+      working-directory: app
+    
+    - name: run tests
+      run: npm test
+      working-directory: app
