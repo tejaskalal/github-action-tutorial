@@ -2,7 +2,7 @@ name: docker CI workflow/pipeline
 
 on:
   push:
-    branches: [ "master" ]  
+    branches: [ "master" ]
 
 jobs:
   build:
@@ -11,6 +11,14 @@ jobs:
     steps:
       - name: Checkout code
         uses: actions/checkout@v3
+
+      - name: Debug secrets
+        run: |
+          if [ -z "${{ secrets.DOCKERHUB_USERNAME }}" ]; then
+            echo "USERNAME is EMPTY "
+          else
+            echo "USERNAME is SET "
+          fi
 
       - name: Login to DockerHub
         run: echo "${{ secrets.DOCKERHUB_TOKEN }}" | docker login -u "${{ secrets.DOCKERHUB_USERNAME }}" --password-stdin
