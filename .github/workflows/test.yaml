@@ -1,0 +1,14 @@
+name: testing-ec2-runner
+
+on:
+  push:
+
+jobs:
+  test:
+    runs-on: self-hosted
+    steps:
+      - name: check system
+        run: |
+          echo "running on self hosted server"
+          whoami
+          hostname
